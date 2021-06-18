@@ -16,7 +16,7 @@
 
 webpack是基于Javascript的静态资源打包工具，宗旨：一切静态资源皆可打包。
 
-![image-20210618103436985](.\image-20210618103436985.png)
+![image-20210618103436985](image-20210618103436985.png)
 
 ### 二、原理分析
 
@@ -55,7 +55,7 @@ exports.default = function() {
    export.default(1, 3)
    ```
 
-   ![image-20210618111525401](.\image-20210618111525401.png)
+   ![image-20210618111525401](image-20210618111525401.png)
 
    上面这段代码运行结果可以将模块中的方法绑定到exports对象中，为了不务扰全局我们使用一个自执行函数来封装。
 
@@ -66,7 +66,7 @@ exports.default = function() {
    })(exports, `exports.default = function(a, b) { return a + b }`)
    ```
 
-   ![image-20210618111829240](.\image-20210618111829240.png)
+   ![image-20210618111829240](image-20210618111829240.png)
 
 2. **模拟require函数**
 
@@ -89,7 +89,7 @@ exports.default = function() {
    console.log(add(1,2));
    ```
 
-   ![image-20210618112623276](.\image-20210618112623276.png)
+   ![image-20210618112623276](image-20210618112623276.png)
 
    模拟多个文件的加载，使用一张key-value的表来加载不同的代码模块。
 
@@ -114,7 +114,7 @@ exports.default = function() {
    });
    ```
 
-   ![image-20210618113532583](.\image-20210618113532583.png)
+   ![image-20210618113532583](image-20210618113532583.png)
 
    理解webpack生成的bundle.js文件还需要增加模块间的依赖关系
 
@@ -213,7 +213,7 @@ exports.default = function() {
    }
    ```
 
-   ![image-20210618144244876](.\image-20210618144244876.png)
+   ![image-20210618144244876](image-20210618144244876.png)
 
 2. **收集依赖**
 
@@ -272,7 +272,7 @@ exports.default = function() {
 
    
 
-   ![image-20210618145752862](.\image-20210618145752862.png)
+   ![image-20210618145752862](image-20210618145752862.png)
 
 3. **生成bundle文件**
 
@@ -307,7 +307,7 @@ exports.default = function() {
 
    最终效果
 
-   ![image-20210618151919315](.\image-20210618151919315.png)
+   ![image-20210618151919315](image-20210618151919315.png)
 
    **1.分析自执行函数graph**
 
@@ -377,7 +377,7 @@ exports.default = function() {
 
        - 此时，我们执行require中的自执行函数，即将**absRequire**(获取绝对路径的函数，并用require函数返回值的函数), **graph["index.js"].code**传入，同时将exports变量传入。
 
-         ![image-20210618160427269](.\image-20210618160427269.png)
+         ![image-20210618160427269](image-20210618160427269.png)
 
        - 接着这里执行index的代码，其中包含有一句require("./add.js")，所以此时的require并非上面的require，而是我们传入的absRequire(为了使用绝对路径引入)
 
@@ -397,11 +397,11 @@ exports.default = function() {
 
    下图是效果
 
-   ![image-20210618155114024](.\image-20210618155114024.png)
+   ![image-20210618155114024](image-20210618155114024.png)
 
-   ![image-20210618155127356](.\image-20210618155127356.png)
+   ![image-20210618155127356](image-20210618155127356.png)
 
-   ![image-20210618155252779](.\image-20210618155252779.png)
+   ![image-20210618155252779](image-20210618155252779.png)
 
 本文是基于然叔的 [做了一夜动画，让大家十分钟搞懂Webpack](https://juejin.cn/post/6961961165656326152)文章，以上仅是本人的一些理解
 
