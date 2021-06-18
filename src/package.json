@@ -1,0 +1,27 @@
+{
+  "name": "wheel-awesome",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest" 
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hua-bang/wheel-awesome.git"
+  },
+  "keywords": [
+    "JavaScript",
+    "util",
+    "wheel"
+  ],
+  "author": "hua_bang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hua-bang/wheel-awesome/issues"
+  },
+  "homepage": "https://github.com/hua-bang/wheel-awesome#readme",
+  "devDependencies": {
+    "jest": "^27.0.4"
+  }
+}
