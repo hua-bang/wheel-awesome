@@ -1,4 +1,4 @@
-import { sub  } from './sub.js';
+import { sub } from './sub.js';
 
 export { sub }
 
