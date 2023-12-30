@@ -1,4 +1,6 @@
-import axios from 'axios';
-const path = require('path');
+import {
+  add
+} from './add.js';
+const a = add(1,2);
 
-const a = 2;
+console.log(a);
