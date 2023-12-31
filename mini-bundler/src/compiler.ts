@@ -16,6 +16,8 @@ export class Compiler {
   private dependencyGraph: DependencyGraph;
   private plugins: Plugin[];
 
+  public output: string | undefined;
+
   constructor(options: CompilerOptions) {
     this.plugins = options.plugins || [];
     this.plugins.forEach(plugin => plugin.apply(this));
@@ -29,6 +31,7 @@ export class Compiler {
 
   bundle() {
     const result = bundle(this.dependencyGraph);
+    this.output = result;
     fs.writeFileSync(this.options.output, result);
   }
 
