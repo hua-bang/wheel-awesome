@@ -3,4 +3,6 @@ import * as path from "path";
 
 const filePath = path.resolve(__dirname, "./code/index.js");
 
-run(filePath);
+const outputPath = path.resolve(__dirname, "./output/bundle.js");
+
+run(filePath, outputPath);

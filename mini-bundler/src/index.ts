@@ -149,14 +149,8 @@ const bundle = (graph: DependencyGraph): string => {
   `;
 };
 
-const run = () => {
-  const filePath = path.resolve(__dirname, "./index.js");
-
+export const run = (filePath: string, outputPath: string) => {
   const graph = createDependencyGraph(filePath);
   const result = bundle(graph);
-
-  const outputPath = path.resolve(__dirname, "./output/bundle.js");
   fs.writeFileSync(outputPath, result);
 };
-
-run();
