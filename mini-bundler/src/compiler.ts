@@ -5,6 +5,7 @@ import { createDependencyGraph } from './create-dependency-graph';
 import Hook from "./hook";
 import Plugin from "./plugin";
 import { Stats } from "./stats";
+import { Loader } from "./loader";
 
 export class Compiler {
 
@@ -15,11 +16,14 @@ export class Compiler {
 
   private options: CompilerOptions;
   private dependencyGraph: DependencyGraph;
+
+  private loaders: Record<string, Loader[]> = {};
   private plugins: Plugin[];
 
   public stats: Stats = new Stats();
 
   constructor(options: CompilerOptions) {
+    this.loaders = options.loaders || {};
     this.plugins = options.plugins || [];
     this.plugins.forEach(plugin => plugin.apply(this));
 
@@ -47,4 +51,5 @@ export interface CompilerOptions {
   entry: string;
   output: string;
   plugins?: Plugin[];
+  loaders?: Record<string, Loader[]>;
 };
