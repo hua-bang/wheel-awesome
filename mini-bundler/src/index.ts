@@ -1,9 +1,7 @@
-import * as fs from "fs";
-import { createDependencyGraph } from "./create-dependency-graph";
-import { bundle } from "./bundle";
+import { Compiler, CompilerOptions } from "./compiler";
 
-export const run = (filePath: string, outputPath: string) => {
-  const graph = createDependencyGraph(filePath);
-  const result = bundle(graph);
-  fs.writeFileSync(outputPath, result);
+export const run = (compilerOptions: CompilerOptions) => {
+  const compiler = new Compiler(compilerOptions);
+  console.log('run');
+  compiler.run();
 };

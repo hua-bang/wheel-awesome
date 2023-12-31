@@ -5,4 +5,7 @@ const filePath = path.resolve(__dirname, "./code/index.js");
 
 const outputPath = path.resolve(__dirname, "./output/bundle.js");
 
-run(filePath, outputPath);
+run({
+  entry: filePath,
+  output: outputPath
+});
