@@ -4,6 +4,7 @@ import { bundle } from './bundle';
 import { createDependencyGraph } from './create-dependency-graph';
 import Hook from "./hook";
 import Plugin from "./plugin";
+import { Stats } from "./stats";
 
 export class Compiler {
 
@@ -16,7 +17,7 @@ export class Compiler {
   private dependencyGraph: DependencyGraph;
   private plugins: Plugin[];
 
-  public output: string | undefined;
+  public stats: Stats = new Stats();
 
   constructor(options: CompilerOptions) {
     this.plugins = options.plugins || [];
@@ -31,7 +32,7 @@ export class Compiler {
 
   bundle() {
     const result = bundle(this.dependencyGraph);
-    this.output = result;
+    this.stats.setOutput(result);
     fs.writeFileSync(this.options.output, result);
   }
 

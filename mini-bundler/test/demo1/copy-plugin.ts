@@ -17,9 +17,9 @@ class CopyPlugin implements Plugin {
   apply(compiler: Compiler) {
     compiler.hooks.afterRun.tap('LoggerPlugin', () => {
       const { output } = this.options;
-      if (compiler.output) {
+      if (compiler.stats.output) {
         console.log(`copy file begin: output path is ${output}`);
-        fs.writeFileSync(this.options.output, compiler.output);
+        fs.writeFileSync(this.options.output, compiler.stats.output);
         console.log(`copy file finished.`);
       } 
     });
