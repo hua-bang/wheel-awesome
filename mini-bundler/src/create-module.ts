@@ -4,14 +4,22 @@ import * as parser from "@babel/parser";
 import * as BabelType from "@babel/types";
 import { transformFromAstSync, traverse } from "@babel/core";
 import { Module } from "./typings";
+import { Loader, applyLoaders } from "./loader";
 
-export function createModule(filePath: string): Module {
+export function createModule(
+  filePath: string,
+  loaderMap?: Record<string, Loader[]>
+): Module {
   const fileExtension = path.extname(filePath);
-  let content = "";
+  let content = fs.readFileSync(filePath, "utf-8") || "";
 
   const dependencies: string[] = [];
 
   const mapping: Record<string, string> = {};
+
+  if (loaderMap?.[fileExtension]) {
+    content = applyLoaders(content, filePath, loaderMap);
+  }
 
   if (fileExtension === ".js") {
     content = fs.readFileSync(filePath, "utf-8");

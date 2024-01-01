@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "node ./bundle.js",
-    "dev:ts": "ts-node ./src/index.ts",
+    "dev:ts": "ts-node ./test/demo1/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

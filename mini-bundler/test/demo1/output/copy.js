@@ -14,19 +14,29 @@
         return module.exports;
       }
 
-      require("/workspaces/wheel-awesome/mini-bundler/test/demo1/code/index.js");
+      require("/Users/hujiahua/code/workBranch/wheel-awesome/mini-bundler/test/demo1/code/index.js");
     })({
-      "/workspaces/wheel-awesome/mini-bundler/test/demo1/code/index.js": [
+      "/Users/hujiahua/code/workBranch/wheel-awesome/mini-bundler/test/demo1/code/index.js": [
         function (require, module, exports) {
           "use strict";
 
+require("./index.css");
 var _add = require("./add.js");
 console.log((0, _add.add)(2, 3), (0, _add.sub)(3, 2));
         },
-        {"./add.js":"/workspaces/wheel-awesome/mini-bundler/test/demo1/code/add.js"},
+        {"./index.css":"/Users/hujiahua/code/workBranch/wheel-awesome/mini-bundler/test/demo1/code/index.css","./add.js":"/Users/hujiahua/code/workBranch/wheel-awesome/mini-bundler/test/demo1/code/add.js"},
       ],
     
-      "/workspaces/wheel-awesome/mini-bundler/test/demo1/code/add.js": [
+      "/Users/hujiahua/code/workBranch/wheel-awesome/mini-bundler/test/demo1/code/index.css": [
+        function (require, module, exports) {
+          const style = document.createElement('style');
+          style.innerText = "body {  background: red;}";
+          document.head.appendChild(style);
+        },
+        {},
+      ],
+    
+      "/Users/hujiahua/code/workBranch/wheel-awesome/mini-bundler/test/demo1/code/add.js": [
         function (require, module, exports) {
           "use strict";
 
@@ -47,10 +57,10 @@ function add(a, b) {
 }
 var _default = exports["default"] = add;
         },
-        {"./sub.js":"/workspaces/wheel-awesome/mini-bundler/test/demo1/code/sub.js"},
+        {"./sub.js":"/Users/hujiahua/code/workBranch/wheel-awesome/mini-bundler/test/demo1/code/sub.js"},
       ],
     
-      "/workspaces/wheel-awesome/mini-bundler/test/demo1/code/sub.js": [
+      "/Users/hujiahua/code/workBranch/wheel-awesome/mini-bundler/test/demo1/code/sub.js": [
         function (require, module, exports) {
           "use strict";
 
