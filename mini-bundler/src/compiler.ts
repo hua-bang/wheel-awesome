@@ -1,14 +1,13 @@
 import * as fs from "fs";
-import { DependencyGraph } from './typings';
-import { bundle } from './bundle';
-import { createDependencyGraph } from './create-dependency-graph';
+import { DependencyGraph } from "./typings";
+import { bundle } from "./bundle";
+import { createDependencyGraph } from "./create-dependency-graph";
 import Hook from "./hook";
 import Plugin from "./plugin";
 import { Stats } from "./stats";
 import { Loader } from "./loader";
 
 export class Compiler {
-
   hooks = {
     beforeRun: new Hook(),
     afterRun: new Hook(),
@@ -25,13 +24,13 @@ export class Compiler {
   constructor(options: CompilerOptions) {
     this.loaders = options.loaders || {};
     this.plugins = options.plugins || [];
-    this.plugins.forEach(plugin => plugin.apply(this));
+    this.plugins.forEach((plugin) => plugin.apply(this));
 
     this.options = options;
 
     const { entry } = this.options;
 
-    this.dependencyGraph = createDependencyGraph(entry);
+    this.dependencyGraph = createDependencyGraph(entry, this.loaders);
   }
 
   bundle() {
@@ -52,4 +51,4 @@ export interface CompilerOptions {
   output: string;
   plugins?: Plugin[];
   loaders?: Record<string, Loader[]>;
-};
+}

@@ -1,6 +1,7 @@
 import * as path from "path";
 import { createModule } from "./create-module";
 import { DependencyGraph, Module } from "./typings";
+import { Loader } from "./loader";
 
 /**
  * 创建依赖关系图。
@@ -10,8 +11,11 @@ import { DependencyGraph, Module } from "./typings";
  * @param {string} entry - 入口文件的路径。
  * @returns {DependencyGraph} - 表示依赖关系的图，这是一个映射，其中键是模块ID，值是模块对象。
  */
-export const createDependencyGraph = (entry: string): DependencyGraph => {
-  const entryModule = createModule(entry);
+export const createDependencyGraph = (
+  entry: string,
+  loaderMap?: Record<string, Loader[]>
+): DependencyGraph => {
+  const entryModule = createModule(entry, loaderMap);
 
   const graph: DependencyGraph = new Map<string, Module>();
 
@@ -28,7 +32,7 @@ export const createDependencyGraph = (entry: string): DependencyGraph => {
         "..",
         dependencyPath
       );
-      const dependencyModule = createModule(absoluteDependencyPath);
+      const dependencyModule = createModule(absoluteDependencyPath, loaderMap);
       explore(dependencyModule);
     });
   };

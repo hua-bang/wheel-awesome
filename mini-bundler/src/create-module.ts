@@ -6,21 +6,22 @@ import { transformFromAstSync, traverse } from "@babel/core";
 import { Module } from "./typings";
 import { Loader, applyLoaders } from "./loader";
 
-export function createModule(filePath: string, loaderMap?: Record<string, Loader[]>): Module {
+export function createModule(
+  filePath: string,
+  loaderMap?: Record<string, Loader[]>
+): Module {
   const fileExtension = path.extname(filePath);
-  let content = "";
-  let hasApplyLoaders = false;
+  let content = fs.readFileSync(filePath, "utf-8") || "";
 
   const dependencies: string[] = [];
 
   const mapping: Record<string, string> = {};
 
-  if(loaderMap?.[fileExtension]) {
+  if (loaderMap?.[fileExtension]) {
     content = applyLoaders(content, filePath, loaderMap);
-    hasApplyLoaders = true;
   }
 
-  if (fileExtension === ".js" || hasApplyLoaders) {
+  if (fileExtension === ".js") {
     content = fs.readFileSync(filePath, "utf-8");
     const ast = parser.parse(content, {
       sourceType: "module",
