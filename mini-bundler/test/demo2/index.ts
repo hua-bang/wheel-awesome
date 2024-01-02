@@ -5,7 +5,7 @@ import CopyPlugin from "./copy-plugin";
 import { cssLoader } from "./css-loader";
 import { tsLoader } from "./loader/ts-loader";
 
-const filePath = path.resolve(__dirname, "./code/index.js");
+const filePath = path.resolve(__dirname, "./code/index.ts");
 
 const outputPath = path.resolve(__dirname, "./output/bundle.js");
 
