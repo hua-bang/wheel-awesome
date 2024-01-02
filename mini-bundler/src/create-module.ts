@@ -21,8 +21,7 @@ export function createModule(
     content = applyLoaders(content, filePath, loaderMap);
   }
 
-  if (fileExtension === ".js") {
-    content = fs.readFileSync(filePath, "utf-8");
+  if (fileExtension === ".js" || fileExtension === ".ts") {
     const ast = parser.parse(content, {
       sourceType: "module",
     });
