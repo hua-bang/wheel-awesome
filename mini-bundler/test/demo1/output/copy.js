@@ -29,9 +29,11 @@ console.log((0, _add.add)(2, 3), (0, _add.sub)(3, 2));
     
       "/Users/hujiahua/code/workBranch/wheel-awesome/mini-bundler/test/demo1/code/index.css": [
         function (require, module, exports) {
-          const style = document.createElement('style');
-          style.innerText = "body {  background: red;}";
-          document.head.appendChild(style);
+          "use strict";
+
+var style = document.createElement('style');
+style.innerText = "body {  background: red;}";
+document.head.appendChild(style);
         },
         {},
       ],

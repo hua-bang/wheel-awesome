@@ -20,7 +20,10 @@
         function (require, module, exports) {
           "use strict";
 
-console.log('hello, world');
+var add = function add(a, b) {
+  return a + b;
+};
+console.log(add(1, 2));
         },
         {},
       ],

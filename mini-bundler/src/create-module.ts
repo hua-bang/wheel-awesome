@@ -21,43 +21,34 @@ export function createModule(
     content = applyLoaders(content, filePath, loaderMap);
   }
 
-  if (fileExtension === ".js" || fileExtension === ".ts") {
-    const ast = parser.parse(content, {
-      sourceType: "module",
-    });
+  const ast = parser.parse(content, {
+    sourceType: "module",
+  });
 
-    const { code } =
-      transformFromAstSync(ast, content, {
-        presets: ["@babel/preset-env"],
-      }) || {};
+  const { code } =
+    transformFromAstSync(ast, content, {
+      presets: ["@babel/preset-env"],
+    }) || {};
 
-    content = code || content;
+  content = code || content;
 
-    traverse(ast, {
-      ImportDeclaration({ node }) {
-        dependencies.push(node.source.value);
-      },
-      CallExpression({ node }) {
-        if (
-          node.callee.type === "Identifier" &&
-          node.callee.name === "require"
-        ) {
-          if (BabelType.isStringLiteral(node.arguments[0])) {
-            dependencies.push(node.arguments[0].value);
-          }
+  traverse(ast, {
+    ImportDeclaration({ node }) {
+      dependencies.push(node.source.value);
+    },
+    CallExpression({ node }) {
+      if (node.callee.type === "Identifier" && node.callee.name === "require") {
+        if (BabelType.isStringLiteral(node.arguments[0])) {
+          dependencies.push(node.arguments[0].value);
         }
-      },
-    });
+      }
+    },
+  });
 
-    dependencies.forEach((dependency) => {
-      const absoluteDependencyPath = path.resolve(filePath, "..", dependency);
-      mapping[dependency] = absoluteDependencyPath;
-    });
-  } else if (fileExtension === ".json") {
-    // 直接读取JSON文件并转换为JavaScript对象
-    const jsonContent = fs.readFileSync(filePath, "utf-8");
-    content = `module.exports = ${jsonContent}`;
-  }
+  dependencies.forEach((dependency) => {
+    const absoluteDependencyPath = path.resolve(filePath, "..", dependency);
+    mapping[dependency] = absoluteDependencyPath;
+  });
 
   return {
     id: path.resolve(filePath),
