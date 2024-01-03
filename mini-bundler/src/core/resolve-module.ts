@@ -1,4 +1,4 @@
-import { fileExists, isDirectory } from "./utils/file";
+import { fileExists, isDirectory } from "../utils/file";
 
 export function resolveModule(importPath: string) {
   const possibleExtensions = [".js", ".jsx", ".ts", ".tsx"];

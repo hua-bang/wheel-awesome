@@ -1,7 +1,7 @@
 import * as path from "path";
 import { createModule } from "./create-module";
-import { DependencyGraph, Module } from "./typings";
-import { Loader } from "./loader";
+import { DependencyGraph, Module } from "../typings";
+import { Loader } from "../loader";
 
 /**
  * 创建依赖关系图。

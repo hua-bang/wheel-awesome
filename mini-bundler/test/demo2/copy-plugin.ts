@@ -1,5 +1,5 @@
-import * as fs from 'fs';
-import { Compiler } from "../../src/compiler";
+import * as fs from "fs";
+import { Compiler } from "../../src/core/compiler";
 import Plugin from "../../src/plugin";
 
 interface CopyPluginOptions {
@@ -7,7 +7,6 @@ interface CopyPluginOptions {
 }
 
 class CopyPlugin implements Plugin {
-
   options: CopyPluginOptions;
 
   constructor(options: CopyPluginOptions) {
@@ -15,13 +14,13 @@ class CopyPlugin implements Plugin {
   }
 
   apply(compiler: Compiler) {
-    compiler.hooks.afterRun.tap('LoggerPlugin', () => {
+    compiler.hooks.afterRun.tap("LoggerPlugin", () => {
       const { output } = this.options;
       if (compiler.stats.output) {
         console.log(`copy file begin: output path is ${output}`);
         fs.writeFileSync(this.options.output, compiler.stats.output);
         console.log(`copy file finished.`);
-      } 
+      }
     });
   }
 }

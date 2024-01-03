@@ -1,11 +1,11 @@
 import * as fs from "fs";
-import { DependencyGraph } from "./typings";
+import { DependencyGraph } from "../typings";
 import { bundle } from "./bundle";
 import { createDependencyGraph } from "./create-dependency-graph";
 import Hook from "./hook";
-import Plugin from "./plugin";
+import Plugin from "../plugin";
 import { Stats } from "./stats";
-import { Loader } from "./loader";
+import { Loader } from "../loader";
 
 export class Compiler {
   hooks = {

@@ -6,7 +6,7 @@ import * as fs from "fs";
  * @param {string} filePath 要检查的文件路径
  * @returns {boolean} 如果文件存在则返回 true，否则返回 false
  */
-export function fileExists(filePath: string) {
+export function fileExists(filePath: string): boolean {
   try {
     // 使用 fs.statSync 获取文件信息。如果文件不存在，它将抛出一个错误。
     const stats = fs.statSync(filePath);
@@ -24,7 +24,7 @@ export function fileExists(filePath: string) {
  * @param {string} dirPath 要检查的目录路径
  * @returns {boolean} 如果路径是目录则返回 true，否则返回 false
  */
-export function isDirectory(dirPath: string) {
+export function isDirectory(dirPath: string): boolean {
   try {
     // 使用 fs.statSync 获取目录信息。如果目录不存在，它将抛出一个错误。
     const stats = fs.statSync(dirPath);

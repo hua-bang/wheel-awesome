@@ -5,5 +5,3 @@ export interface Module {
   dependencies: string[];
   mapping?: Record<string, string>;
 }
-
-export type DependencyGraph = Map<string, Module>;

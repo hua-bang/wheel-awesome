@@ -3,8 +3,8 @@ import * as path from "path";
 import * as parser from "@babel/parser";
 import * as BabelType from "@babel/types";
 import { transformFromAstSync, traverse } from "@babel/core";
-import { Module } from "./typings";
-import { Loader, applyLoaders } from "./loader";
+import { Module } from "../typings";
+import { Loader, applyLoaders } from "../loader";
 import { resolveModule } from "./resolve-module";
 
 export function createModule(

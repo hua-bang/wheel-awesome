@@ -1,4 +1,4 @@
-import { Compiler, CompilerOptions } from "./compiler";
+import { Compiler, CompilerOptions } from "./core/compiler";
 
 export const run = (compilerOptions: CompilerOptions) => {
   const compiler = new Compiler(compilerOptions);

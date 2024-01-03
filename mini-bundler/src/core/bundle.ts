@@ -1,4 +1,4 @@
-import { DependencyGraph } from "./typings";
+import { DependencyGraph } from "../typings";
 
 /**
  * 打包依赖关系图为单一字符串。
