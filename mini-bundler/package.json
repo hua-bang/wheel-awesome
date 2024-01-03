@@ -16,6 +16,7 @@
     "@babel/generator": "^7.23.6",
     "@babel/parser": "^7.23.6",
     "@babel/preset-env": "^7.23.6",
+    "@babel/preset-typescript": "^7.23.3",
     "@babel/traverse": "^7.23.6",
     "@babel/types": "^7.23.6",
     "@types/node": "^20.10.4",

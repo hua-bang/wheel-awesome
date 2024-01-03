@@ -3,7 +3,9 @@ import * as path from "path";
 import LoggerPlugin from "./logger-plugin";
 import CopyPlugin from "./copy-plugin";
 import { cssLoader } from "./css-loader";
-import { tsLoader } from "./loader/ts-loader";
+import { getTSLoader } from "./loader/ts-loader";
+
+const tsLoader = getTSLoader({ useBabel: true });
 
 const filePath = path.resolve(__dirname, "./code/index.ts");
 
