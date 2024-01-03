@@ -5,20 +5,23 @@ import * as BabelType from "@babel/types";
 import { transformFromAstSync, traverse } from "@babel/core";
 import { Module } from "./typings";
 import { Loader, applyLoaders } from "./loader";
+import { resolveModule } from "./resolve-module";
 
 export function createModule(
   filePath: string,
   loaderMap?: Record<string, Loader[]>
 ): Module {
-  const fileExtension = path.extname(filePath);
-  let content = fs.readFileSync(filePath, "utf-8") || "";
+  const realFilePath = resolveModule(filePath);
+
+  const fileExtension = path.extname(realFilePath);
+  let content = fs.readFileSync(realFilePath, "utf-8") || "";
 
   const dependencies: string[] = [];
 
   const mapping: Record<string, string> = {};
 
   if (loaderMap?.[fileExtension]) {
-    content = applyLoaders(content, filePath, loaderMap);
+    content = applyLoaders(content, realFilePath, loaderMap);
   }
 
   const ast = parser.parse(content, {
@@ -46,12 +49,14 @@ export function createModule(
   });
 
   dependencies.forEach((dependency) => {
-    const absoluteDependencyPath = path.resolve(filePath, "..", dependency);
+    const absoluteDependencyPath = resolveModule(
+      path.resolve(filePath, "..", dependency)
+    );
     mapping[dependency] = absoluteDependencyPath;
   });
 
   return {
-    id: path.resolve(filePath),
+    id: path.resolve(realFilePath),
     filePath,
     content,
     dependencies,

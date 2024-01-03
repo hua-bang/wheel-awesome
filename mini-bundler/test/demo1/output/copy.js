@@ -21,10 +21,10 @@
           "use strict";
 
 require("./index.css");
-var _add = require("./add.js");
+var _add = require("./add");
 console.log((0, _add.add)(2, 3), (0, _add.sub)(3, 2));
         },
-        {"./index.css":"/Users/hujiahua/code/workBranch/wheel-awesome/mini-bundler/test/demo1/code/index.css","./add.js":"/Users/hujiahua/code/workBranch/wheel-awesome/mini-bundler/test/demo1/code/add.js"},
+        {"./index.css":"/Users/hujiahua/code/workBranch/wheel-awesome/mini-bundler/test/demo1/code/index.css","./add":"/Users/hujiahua/code/workBranch/wheel-awesome/mini-bundler/test/demo1/code/add.js"},
       ],
     
       "/Users/hujiahua/code/workBranch/wheel-awesome/mini-bundler/test/demo1/code/index.css": [
@@ -53,13 +53,13 @@ Object.defineProperty(exports, "sub", {
     return _sub.sub;
   }
 });
-var _sub = require("./sub.js");
+var _sub = require("./sub");
 function add(a, b) {
   return a + b;
 }
 var _default = exports["default"] = add;
         },
-        {"./sub.js":"/Users/hujiahua/code/workBranch/wheel-awesome/mini-bundler/test/demo1/code/sub.js"},
+        {"./sub":"/Users/hujiahua/code/workBranch/wheel-awesome/mini-bundler/test/demo1/code/sub.js"},
       ],
     
       "/Users/hujiahua/code/workBranch/wheel-awesome/mini-bundler/test/demo1/code/sub.js": [
