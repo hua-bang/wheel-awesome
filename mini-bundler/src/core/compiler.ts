@@ -6,6 +6,7 @@ import Hook from "./hook";
 import Plugin from "../plugin";
 import { Stats } from "./stats";
 import { Loader } from "../loader";
+import Context from "./context";
 
 export class Compiler {
   hooks = {
@@ -13,30 +14,31 @@ export class Compiler {
     afterRun: new Hook(),
   };
 
-  private options: CompilerOptions;
+  private context: Context;
   private dependencyGraph: DependencyGraph;
 
-  private loaders: Record<string, Loader[]> = {};
   private plugins: Plugin[];
 
   public stats: Stats = new Stats();
 
   constructor(options: CompilerOptions) {
-    this.loaders = options.loaders || {};
     this.plugins = options.plugins || [];
     this.plugins.forEach((plugin) => plugin.apply(this));
 
-    this.options = options;
+    this.context = new Context(options);
 
-    const { entry } = this.options;
+    const { entry } = this.context.options;
 
-    this.dependencyGraph = createDependencyGraph(entry, this.loaders);
+    this.dependencyGraph = createDependencyGraph(
+      entry,
+      this.context.options.loaders
+    );
   }
 
   bundle() {
     const result = bundle(this.dependencyGraph);
     this.stats.setOutput(result);
-    fs.writeFileSync(this.options.output, result);
+    fs.writeFileSync(this.context.options.output, result);
   }
 
   run() {
