@@ -17,22 +17,15 @@ export class Compiler {
   private context: Context;
   private dependencyGraph: DependencyGraph;
 
-  private plugins: Plugin[];
-
   public stats: Stats = new Stats();
 
   constructor(options: CompilerOptions) {
-    this.plugins = options.plugins || [];
-    this.plugins.forEach((plugin) => plugin.apply(this));
-
     this.context = new Context(options);
+    this.context.plugins.forEach((plugin) => plugin.apply(this));
 
     const { entry } = this.context.options;
 
-    this.dependencyGraph = createDependencyGraph(
-      entry,
-      this.context.options.loaders
-    );
+    this.dependencyGraph = createDependencyGraph(entry, this.context.loaders);
   }
 
   bundle() {
