@@ -1,5 +1,5 @@
-import { Compiler } from "../../src/core/compiler";
-import Plugin from "../../src/plugin";
+import { Compiler } from "../../../core/compiler";
+import Plugin from "../../../plugin";
 
 class LoggerPlugin implements Plugin {
   apply(compiler: Compiler) {

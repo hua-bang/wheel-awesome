@@ -1,10 +1,10 @@
 import { run } from "../../src/index";
 import * as path from "path";
-import LoggerPlugin from "./logger-plugin";
-import CopyPlugin from "./copy-plugin";
-import { cssLoader } from "./css-loader";
-import { getTSLoader } from "./loader/ts-loader";
 import HtmlPlugin from "../../src/tool-kit/plugins/html-plugin";
+import CopyPlugin from "../../src/tool-kit/plugins/copy-plugin";
+import LoggerPlugin from "../../src/tool-kit/plugins/logger-plugin";
+import { getTSLoader } from "../../src/tool-kit/loaders/ts-loader";
+import { cssLoader } from "../../src/tool-kit/loaders/css-loader";
 
 const tsLoader = getTSLoader({ useBabel: true });
 
