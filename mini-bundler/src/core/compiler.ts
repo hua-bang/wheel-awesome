@@ -30,7 +30,7 @@ export class Compiler {
 
   bundle() {
     const result = bundle(this.dependencyGraph);
-    this.stats.setOutput(result);
+    this.stats.setOutput(result, this.context.options.output);
     fs.writeFileSync(this.context.options.output, result);
   }
 

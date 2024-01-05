@@ -1,4 +1,4 @@
-import { run } from "../../src/index";
+import { run } from "../../../src/index";
 import * as path from "path";
 import LoggerPlugin from "./logger-plugin";
 import CopyPlugin from "./copy-plugin";
