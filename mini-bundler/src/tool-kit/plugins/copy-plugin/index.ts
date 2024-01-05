@@ -1,6 +1,6 @@
 import * as fs from "fs";
-import { Compiler } from "../../src/core/compiler";
-import Plugin from "../../src/plugin";
+import Plugin from "../../../plugin";
+import { Compiler } from "../../../core/compiler";
 
 interface CopyPluginOptions {
   output: string;

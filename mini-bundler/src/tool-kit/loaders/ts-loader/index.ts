@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 import * as babel from "@babel/core";
-import { Loader } from "../../../src/loader";
+import { Loader } from "../../../loader";
 
 export const tsLoader: Loader = (content, filePath) => {
   // 使用 TypeScript 编译器 API 编译代码

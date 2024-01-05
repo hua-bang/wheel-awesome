@@ -1,4 +1,4 @@
-import { Loader } from "../../src/loader";
+import { Loader } from "../../../loader";
 
 export const cssLoader: Loader = (content, filePath) => {
   const escaped = content.replace(/\n/g, "").replace(/"/g, '\\"');

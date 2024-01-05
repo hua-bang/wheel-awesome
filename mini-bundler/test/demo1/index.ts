@@ -1,9 +1,9 @@
-import { run } from "../../../src/index";
 import * as path from "path";
-import LoggerPlugin from "./logger-plugin";
-import CopyPlugin from "./copy-plugin";
-import { cssLoader } from "./css-loader";
-import { tsLoader } from "./loader/ts-loader";
+import { cssLoader } from "../../src/tool-kit/loaders/css-loader";
+import { tsLoader } from "../../src/tool-kit/loaders/ts-loader";
+import LoggerPlugin from "../../src/tool-kit/plugins/logger-plugin";
+import CopyPlugin from "../../src/tool-kit/plugins/copy-plugin";
+import { run } from "../../src";
 
 const filePath = path.resolve(__dirname, "./code/index.js");
 
