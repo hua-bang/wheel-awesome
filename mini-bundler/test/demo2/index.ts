@@ -4,6 +4,7 @@ import LoggerPlugin from "./logger-plugin";
 import CopyPlugin from "./copy-plugin";
 import { cssLoader } from "./css-loader";
 import { getTSLoader } from "./loader/ts-loader";
+import HtmlPlugin from "../../src/tool-kit/plugins/html-plugin";
 
 const tsLoader = getTSLoader({ useBabel: true });
 
@@ -21,5 +22,6 @@ run({
   plugins: [
     new LoggerPlugin(),
     new CopyPlugin({ output: path.resolve(__dirname, "./output/copy.js") }),
+    new HtmlPlugin(),
   ],
 });
