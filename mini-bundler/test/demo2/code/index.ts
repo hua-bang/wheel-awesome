@@ -1,4 +1,8 @@
-import { add } from "./add";
-import { sub } from "./sub";
+import { createRoot } from "react-dom/client";
 
-console.log(add(1, 2), sub(2, 3));
+// Clear the existing HTML content
+document.body.innerHTML = '<div id="app"></div>';
+
+// Render your React component instead
+const root = createRoot(document.getElementById("app"));
+root.render("<h1>Hello, world</h1>");

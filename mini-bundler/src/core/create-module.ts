@@ -49,9 +49,11 @@ export function createModule(
   });
 
   dependencies.forEach((dependency) => {
-    const absoluteDependencyPath = resolveModule(
-      path.resolve(filePath, "..", dependency)
-    );
+    const dependencyPath = isRelativeOrAbsolutePath(dependency)
+      ? path.resolve(filePath, "..", dependency)
+      : dependency;
+
+    const absoluteDependencyPath = resolveModule(dependencyPath);
     mapping[dependency] = absoluteDependencyPath;
   });
 
@@ -62,4 +64,15 @@ export function createModule(
     dependencies,
     mapping,
   };
+}
+
+/**
+ * 判断路径是否是相对路径或绝对路径
+ * @param path 传入的路径
+ * @returns { boolean } 返回是否是相对路径或绝对路径
+ */
+export function isRelativeOrAbsolutePath(path: string): boolean {
+  return (
+    path.startsWith("./") || path.startsWith("../") || path.startsWith("/")
+  );
 }
