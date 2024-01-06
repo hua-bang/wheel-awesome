@@ -1,3 +1,2 @@
-import debounce from "lodash-es/debounce";
-
-console.log("debounce", debounce);
+import { useEffect } from "react";
+console.log(useEffect);
