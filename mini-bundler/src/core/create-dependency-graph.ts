@@ -1,7 +1,8 @@
 import * as path from "path";
-import { createModule } from "./create-module";
+import { createModule, isRelativeOrAbsolutePath } from "./create-module";
 import { DependencyGraph, Module } from "../typings";
 import { Loader } from "../loader";
+import { resolveModule } from "./resolve-module";
 
 /**
  * 创建依赖关系图。
@@ -26,12 +27,12 @@ export const createDependencyGraph = (
 
     graph.set(module.id, module);
 
-    module.dependencies.forEach((dependencyPath) => {
-      const absoluteDependencyPath = path.resolve(
-        module.filePath,
-        "..",
-        dependencyPath
-      );
+    module.dependencies.forEach((dependency) => {
+      const dependencyPath = isRelativeOrAbsolutePath(dependency)
+        ? path.resolve(module.filePath, "..", dependency)
+        : dependency;
+
+      const absoluteDependencyPath = resolveModule(dependencyPath);
       const dependencyModule = createModule(absoluteDependencyPath, loaderMap);
       explore(dependencyModule);
     });

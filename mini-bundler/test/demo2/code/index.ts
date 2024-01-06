@@ -1,4 +1,3 @@
-import { add } from "./add";
-import { sub } from "./sub";
+import debounce from "lodash-es/debounce";
 
-console.log(add(1, 2), sub(2, 3));
+console.log("debounce", debounce);
