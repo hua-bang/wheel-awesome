@@ -16,7 +16,11 @@ export const tsLoader: Loader = (content, filePath) => {
 export const tsLoaderUserBabel: Loader = (content, filePath) => {
   const res = babel.transformSync(content, {
     // Babel 配置，您可以在这里指定预设、插件等
-    presets: ["@babel/preset-env", "@babel/preset-typescript"],
+    presets: [
+      "@babel/preset-env",
+      "@babel/preset-typescript",
+      "@babel/preset-react",
+    ],
     filename: filePath,
   });
 
