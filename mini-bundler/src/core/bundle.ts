@@ -25,8 +25,13 @@ export const bundle = (graph: DependencyGraph): string => {
 
   return `
     (function(modules) {
+      const modulesCache = {};
       function require(id) {
         const [fn, dependencies] = modules[id];
+
+        if(modulesCache[id]) {
+          return modulesCache[id].exports;
+        }
 
         function localRequire(relativePath) {
           return require(dependencies[relativePath]);
@@ -35,6 +40,8 @@ export const bundle = (graph: DependencyGraph): string => {
         const module = { exports: {} };
 
         fn(localRequire, module, module.exports);
+
+        modulesCache[id] = module;
 
         return module.exports;
       }

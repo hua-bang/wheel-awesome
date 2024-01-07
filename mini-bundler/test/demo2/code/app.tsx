@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { add } from "./add";
+import { useEffect } from "react/cjs/react.production.min";
 
 const App = () => {
-  return <div>count: {add(2, 1)}</div>;
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    console.log("render");
+  }, []);
+
+  return (
+    <div onClick={() => setCount((prev) => add(prev, 2))}>count: {count}</div>
+  );
 };
 
 export default App;
