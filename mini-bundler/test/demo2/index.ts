@@ -8,7 +8,7 @@ import { cssLoader } from "../../src/tool-kit/loaders/css-loader";
 
 const tsLoader = getTSLoader({ useBabel: true });
 
-const filePath = path.resolve(__dirname, "./code/index.ts");
+const filePath = path.resolve(__dirname, "./code/index.tsx");
 
 const outputPath = path.resolve(__dirname, "./output/bundle.js");
 
@@ -17,6 +17,7 @@ run({
   output: outputPath,
   loaders: {
     ".css": [cssLoader],
+    ".tsx": [tsLoader],
     ".ts": [tsLoader],
   },
   plugins: [
