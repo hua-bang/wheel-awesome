@@ -10,7 +10,7 @@ const tsLoader = getTSLoader({ useBabel: true });
 
 const filePath = path.resolve(__dirname, "./code/index.tsx");
 
-const outputPath = path.resolve(__dirname, "./output/bundle.js");
+const outputPath = path.resolve(__dirname, "./dist/bundle.js");
 
 run({
   entry: filePath,
@@ -22,7 +22,11 @@ run({
   },
   plugins: [
     new LoggerPlugin(),
-    new CopyPlugin({ output: path.resolve(__dirname, "./output/copy.js") }),
+    new CopyPlugin({ output: path.resolve(__dirname, "./dist/copy.js") }),
     new HtmlPlugin(),
   ],
+  devServer: {
+    rootPath: path.resolve(__dirname),
+    dirName: "output",
+  },
 });

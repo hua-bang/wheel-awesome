@@ -7,7 +7,7 @@ import { run } from "../../src";
 
 const filePath = path.resolve(__dirname, "./code/index.js");
 
-const outputPath = path.resolve(__dirname, "./output/bundle.js");
+const outputPath = path.resolve(__dirname, "./dist/bundle.js");
 
 run({
   entry: filePath,
@@ -18,6 +18,6 @@ run({
   },
   plugins: [
     new LoggerPlugin(),
-    new CopyPlugin({ output: path.resolve(__dirname, "./output/copy.js") }),
+    new CopyPlugin({ output: path.resolve(__dirname, "./dist/copy.js") }),
   ],
 });
