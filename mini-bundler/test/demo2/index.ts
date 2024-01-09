@@ -27,6 +27,5 @@ run({
   ],
   devServer: {
     rootPath: path.resolve(__dirname),
-    dirName: "output",
   },
 });
