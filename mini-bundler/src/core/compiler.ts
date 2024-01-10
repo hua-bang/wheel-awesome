@@ -14,10 +14,11 @@ export class Compiler {
     afterRun: new Hook(),
     fileUpdate: new Hook(),
     bundleComplete: new Hook(),
+    createdDependencyGraph: new Hook(),
   };
 
   public context: Context;
-  private dependencyGraph: DependencyGraph | undefined;
+  public dependencyGraph: DependencyGraph | undefined;
 
   public stats: Stats = new Stats();
 
@@ -33,6 +34,7 @@ export class Compiler {
   bundle() {
     const { entry } = this.context.options;
     this.dependencyGraph = createDependencyGraph(entry, this.context.loaders);
+    this.hooks.createdDependencyGraph.call();
     const result = bundle(this.dependencyGraph);
     this.stats.setOutput(result, this.context.options.output);
     fs.writeFileSync(this.context.options.output, result);
