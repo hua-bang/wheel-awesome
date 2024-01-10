@@ -7,7 +7,6 @@ import Plugin from "../plugin";
 import { Stats } from "./stats";
 import { Loader } from "../loader";
 import Context from "./context";
-import DevServer, { DevServerOptions } from "./devServer";
 
 export class Compiler {
   hooks = {
@@ -22,17 +21,11 @@ export class Compiler {
 
   public stats: Stats = new Stats();
 
-  private devServer: DevServer | undefined;
-
   constructor(options: CompilerOptions) {
     // create context
     this.context = new Context(options, this);
     // register plugins
     this.context.plugins.forEach((plugin) => plugin.apply(this));
-    // register devServer
-    if (options.devServer && options.devServer) {
-      this.devServer = new DevServer(this.context, options.devServer);
-    }
 
     this.registerHooks();
   }
@@ -50,9 +43,6 @@ export class Compiler {
   run() {
     this.hooks.beforeRun.call();
     this.bundle();
-    if (this.devServer) {
-      this.devServer.run();
-    }
     this.hooks.afterRun.call();
   }
 
@@ -68,5 +58,4 @@ export interface CompilerOptions {
   output: string;
   plugins?: Plugin[];
   loaders?: Record<string, Loader[]>;
-  devServer?: DevServerOptions;
 }
