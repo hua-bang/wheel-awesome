@@ -8,6 +8,7 @@ import { Stats } from "./stats";
 import { Loader } from "../loader";
 import Context from "./context";
 import DevServer, { DevServerOptions } from "./devServer";
+import HMRPlugin from "../tool-kit/plugins/hmr-plugin";
 
 export class Compiler {
   hooks = {
@@ -17,7 +18,7 @@ export class Compiler {
     bundleComplete: new Hook(),
   };
 
-  private context: Context;
+  public context: Context;
   private dependencyGraph: DependencyGraph | undefined;
 
   public stats: Stats = new Stats();
@@ -25,8 +26,18 @@ export class Compiler {
   private devServer: DevServer | undefined;
 
   constructor(options: CompilerOptions) {
+    const plugins = options.plugins || [];
+
+    if (options.devServer && options.devServer.hot) {
+      plugins.push(new HMRPlugin());
+    }
+
+    const finalOptions: CompilerOptions = {
+      ...options,
+      plugins,
+    };
     // create context
-    this.context = new Context(options, this);
+    this.context = new Context(finalOptions, this);
     // register plugins
     this.context.plugins.forEach((plugin) => plugin.apply(this));
     // register devServer

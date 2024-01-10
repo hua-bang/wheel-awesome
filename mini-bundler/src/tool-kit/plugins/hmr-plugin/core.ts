@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import { WebSocketServer } from "ws";
-import Context from "./context";
+import Context from "../../../core/context";
 
 const listenFSFileChange = (entry: string, context: Context) => {
   return fs.watch(entry, { recursive: true }, (eventType, filename) => {
@@ -14,6 +14,7 @@ export const runHMR = (options: RunHMROptions, context: Context) => {
   const { entry } = options;
 
   const wss = new WebSocketServer({ port: 3069 });
+  console.log("begin");
 
   wss.on("connection", (ws) => {
     // 当文件更改时，发送消息给客户端
