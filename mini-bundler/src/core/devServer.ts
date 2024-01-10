@@ -1,7 +1,6 @@
 import * as http from "http";
 import * as fs from "fs";
 import * as path from "path";
-import { runHMR } from "./hmr";
 import Context from "./context";
 
 const defaultOptions: DevServerOptions = {
@@ -46,15 +45,6 @@ class DevServer {
     server.listen(port, () => {
       console.log(`devServer is running on http://localhost:${port}`);
     });
-
-    console.log(this.context.options.entry);
-
-    runHMR(
-      {
-        entry: this.context.options.entry,
-      },
-      this.context
-    );
   }
 }
 
@@ -62,6 +52,7 @@ export interface DevServerOptions {
   port?: number;
   rootPath?: string;
   dirName?: string;
+  hot?: boolean;
 }
 
 export default DevServer;

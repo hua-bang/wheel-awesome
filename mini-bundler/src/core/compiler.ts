@@ -17,7 +17,7 @@ export class Compiler {
     bundleComplete: new Hook(),
   };
 
-  private context: Context;
+  public context: Context;
   private dependencyGraph: DependencyGraph | undefined;
 
   public stats: Stats = new Stats();

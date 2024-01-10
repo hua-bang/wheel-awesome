@@ -71,8 +71,6 @@ export const resolveNodeModulesPath = (
     resolvedPath = modulePath + "/index.js";
   }
 
-  // 之前的实现...
-
   return resolvedPath;
 };
 

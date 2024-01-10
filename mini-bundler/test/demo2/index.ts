@@ -27,5 +27,6 @@ run({
   ],
   devServer: {
     rootPath: path.resolve(__dirname),
+    hot: true,
   },
 });

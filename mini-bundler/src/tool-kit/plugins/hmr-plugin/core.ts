@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import { WebSocketServer } from "ws";
-import Context from "./context";
+import Context from "../../../core/context";
 
 const listenFSFileChange = (entry: string, context: Context) => {
   return fs.watch(entry, { recursive: true }, (eventType, filename) => {
