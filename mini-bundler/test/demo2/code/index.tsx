@@ -14,7 +14,7 @@ const ws = new WebSocket("ws://localhost:3069");
 ws.onmessage = function (event) {
   const message = JSON.parse(event.data);
   if (message.type === "update") {
-    console.log("update!!!@@@@@@!!");
+    console.log("update!!!@@@@123123@21321@!!");
     window.location.reload();
   }
 };

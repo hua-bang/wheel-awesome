@@ -1,7 +1,6 @@
 import * as http from "http";
 import * as fs from "fs";
 import * as path from "path";
-import Context from "./context";
 
 const defaultOptions: DevServerOptions = {
   port: 3000,
@@ -11,14 +10,12 @@ const defaultOptions: DevServerOptions = {
 
 class DevServer {
   options: DevServerOptions;
-  context: Context;
 
-  constructor(context: Context, options?: DevServerOptions) {
+  constructor(options?: DevServerOptions) {
     this.options = {
       ...defaultOptions,
       ...(options || {}),
     };
-    this.context = context;
   }
 
   run() {
