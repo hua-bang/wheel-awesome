@@ -29,4 +29,5 @@ run({
     rootPath: path.resolve(__dirname),
     hot: true,
   },
+  watch: true,
 });
