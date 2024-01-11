@@ -6,12 +6,7 @@ import { InjectCode } from "./inject";
 class HMRPlugin implements Plugin {
   apply(compiler: Compiler) {
     compiler.hooks.afterRun.tap("HMRPlugin", () => {
-      runHMR(
-        {
-          entry: compiler.context.options.entry,
-        },
-        compiler.context
-      );
+      runHMR(compiler.context);
     });
 
     compiler.hooks.createdDependencyGraph.tap("HMRPlugin", () => {

@@ -7,6 +7,7 @@ import Plugin from "../plugin";
 import { Stats } from "./stats";
 import { Loader } from "../loader";
 import Context from "./context";
+import { watchFileChange } from "./watch";
 
 export class Compiler {
   hooks = {
@@ -27,6 +28,10 @@ export class Compiler {
     this.context = new Context(options, this);
     // register plugins
     this.context.plugins.forEach((plugin) => plugin.apply(this));
+
+    if (options.watch) {
+      watchFileChange(options.entry, this.context);
+    }
 
     this.registerHooks();
   }
@@ -60,4 +65,5 @@ export interface CompilerOptions {
   output: string;
   plugins?: Plugin[];
   loaders?: Record<string, Loader[]>;
+  watch?: boolean;
 }
