@@ -13,6 +13,7 @@ const filePath = path.resolve(__dirname, "./code/index.tsx");
 const outputPath = path.resolve(__dirname, "./dist/bundle.js");
 
 run({
+  rootPath: path.resolve(__dirname, "./code"),
   entry: filePath,
   output: outputPath,
   loaders: {

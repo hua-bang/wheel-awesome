@@ -30,16 +30,18 @@ export class Compiler {
     this.context.plugins.forEach((plugin) => plugin.apply(this));
 
     if (options.watch) {
-      watchFileChange(options.entry, this.context);
+      watchFileChange(this.context, () => {
+        this.bundle();
+      });
     }
-
-    this.registerHooks();
   }
 
   bundle() {
     const { entry } = this.context.options;
     this.dependencyGraph = createDependencyGraph(entry, this.context.loaders);
+
     this.hooks.createdDependencyGraph.call();
+
     const result = bundle(this.dependencyGraph);
     this.stats.setOutput(result, this.context.options.output);
     fs.writeFileSync(this.context.options.output, result);
@@ -52,12 +54,6 @@ export class Compiler {
     this.bundle();
     this.hooks.afterRun.call();
   }
-
-  registerHooks() {
-    this.hooks.fileUpdate.tap("mini-bundle: fileUpdate", () => {
-      this.bundle();
-    });
-  }
 }
 
 export interface CompilerOptions {
@@ -66,4 +62,5 @@ export interface CompilerOptions {
   plugins?: Plugin[];
   loaders?: Record<string, Loader[]>;
   watch?: boolean;
+  rootPath?: string;
 }
