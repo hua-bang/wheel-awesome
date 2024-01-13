@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { add } from "./add";
-import { useEffect } from "react/cjs/react.production.min";
 
 const App = () => {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
 
   useEffect(() => {
-    console.log("render");
+    console.log("render!!");
   }, []);
 
   return (
