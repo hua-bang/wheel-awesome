@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <div id="example"></div>
+</head>
+<body>
+  
+</body>
+<script>
+  const source = new EventSource('http://127.0.0.1:8844/stream');
+  const div = document.getElementById('example');
+  
+  source.onopen = function (event) {
+    div.innerHTML += '<p>Connection open ...</p>';
+  };
+  
+  source.onerror = function (event) {
+    div.innerHTML += '<p>Connection close.</p>';
+  };
+  
+  source.addEventListener('connecttime', function (event) {
+    div.innerHTML += ('<p>Start time: ' + event.data + '</p>');
+  }, false);
+  
+  source.onmessage = function (event) {
+    div.innerHTML += ('<p>Ping: ' + event.data + '</p>');
+  };
+</script>
+</html>
