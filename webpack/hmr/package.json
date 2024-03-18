@@ -1,0 +1,21 @@
+{
+  "name": "hmr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "webpack serve",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "webpack": "^5.90.3"
+  },  
+  "devDependencies": {
+    "html-webpack-plugin": "^5.6.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.3"
+  }
+}
