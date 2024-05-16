@@ -11,30 +11,23 @@ export class Container {
     this.dependencies.set(key, dependency);
   }
 
-  resolve<T>(key: string): T {
-    const dependency = this.dependencies.get(key);
-    if (!dependency) {
-      throw new Error(`Dependency with key "${key}" not found`);
+  resolve<T>(token: string): T {
+    const target = this.dependencies.get(token);
+    if (!target) {
+      throw new Error(`Service not found: ${token}`);
     }
 
-    const dependencyInstance = new dependency();
-    return this.injectDependencies(dependencyInstance);
-  }
+    // 获取目标类的依赖列表
+    const dependencies = Reflect.getMetadata("design:paramtypes", target) || [];
+    const injections = dependencies.map((dep: any) => {
+      // 假设依赖是用它们的类名注册的
+      return this.resolve(dep.name);
+    });
 
-  private injectDependencies<T>(instance: any): T {
-    const constructor = instance.constructor;
-
-    const paramTypes = Object.keys(instance)
-      .filter((item) => !instance[item])
-      .map((item) => ({
-        name: item,
-      }));
-
-    // const paramTypes =
-    //   Reflect.getMetadata("design:paramtypes", constructor) || [];
-    const dependencies = paramTypes.map((paramType: any) => ({
-      [paramType.name]: this.resolve(paramType.name),
-    }));
-    return Object.assign(instance, ...dependencies);
+    return new target(...injections);
   }
 }
+
+const container = new Container();
+
+export default container;
