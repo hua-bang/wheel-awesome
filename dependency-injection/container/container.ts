@@ -6,12 +6,16 @@ interface Dependency<T = any> {
 
 export class Container {
   private dependencies: Map<string, Dependency> = new Map();
+  private instances: Map<string, any> = new Map();
 
   register<T>(key: string, dependency: Dependency<T>): void {
     this.dependencies.set(key, dependency);
   }
 
   resolve<T>(token: string): T {
+    if (this.instances.has(token)) {
+      return this.instances.get(token);
+    }
     const target = this.dependencies.get(token);
     if (!target) {
       throw new Error(`Service not found: ${token}`);
@@ -24,7 +28,11 @@ export class Container {
       return this.resolve(dep.name);
     });
 
-    return new target(...injections);
+    const instance = new target(...injections);
+
+    this.instances.set(token, instance);
+
+    return instance;
   }
 }
 

@@ -1,23 +1,22 @@
-import "reflect-metadata";
-
 import container from "./container";
 import { Injectable } from "./injectable";
 
 @Injectable()
-class CatService {
-  findAll() {
-    return ["cat1", "cat2", "cat3"];
+class NoticeService {
+  notice(msg: string) {
+    console.log(`notice, ${msg}`);
   }
 }
 
 @Injectable()
-class AppService {
-  constructor(private catsService: CatService) {}
+class App {
+  constructor(private noticeService: NoticeService) {}
 
-  getCats() {
-    return this.catsService.findAll();
+  notice(msg: string) {
+    return this.noticeService.notice(msg);
   }
 }
 
-const appService = container.resolve<AppService>("AppService");
-console.log(appService.getCats()); // ['cat1', 'cat2', 'cat3']
+const appService = container.resolve<App>("App");
+const appService2 = container.resolve<App>("App");
+console.log("appService === appService2", appService === appService2);
