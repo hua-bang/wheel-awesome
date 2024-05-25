@@ -10,8 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@browserbasehq/sdk": "^1.1.5",
+    "@langchain/community": "^0.2.2",
     "@langchain/core": "^0.2.0",
     "@langchain/openai": "^0.0.33",
+    "cheerio": "1.0.0-rc.12",
     "dotenv": "^16.4.5",
     "langchain": "^0.2.2"
   }
