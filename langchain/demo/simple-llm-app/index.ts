@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { ChatOpenAI } from "@langchain/openai";
-import { StringOutputParser } from "@langchain/core/output_parsers";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
+import StringOutputParser from "./parser";
 
 const run = async () => {
   const systemTemplate = "Translate the following into {language}:";
