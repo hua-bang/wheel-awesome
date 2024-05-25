@@ -11,8 +11,8 @@ const run = async () => {
   });
 
   const messages = [
-    new SystemMessage("Translate the following from English into Italian"),
-    new HumanMessage("hi!"),
+    new SystemMessage("Translate the following from English into Chinese."),
+    new HumanMessage("Hey, what's your name? Where are you come from?"),
   ];
 
   const result = await model.invoke(messages);
