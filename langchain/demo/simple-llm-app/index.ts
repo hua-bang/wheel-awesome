@@ -1,8 +1,11 @@
 import "dotenv/config";
 import { ChatOpenAI } from "@langchain/openai";
-import { HumanMessage, SystemMessage } from "@langchain/core/messages";
+import { StringOutputParser } from "@langchain/core/output_parsers";
+import { ChatPromptTemplate } from "@langchain/core/prompts";
 
 const run = async () => {
+  const systemTemplate = "Translate the following into {language}:";
+  const parser = new StringOutputParser();
   const model = new ChatOpenAI({
     model: "gpt-4o",
     configuration: {
@@ -10,12 +13,19 @@ const run = async () => {
     },
   });
 
-  const messages = [
-    new SystemMessage("Translate the following from English into Chinese."),
-    new HumanMessage("Hey, what's your name? Where are you come from?"),
-  ];
+  const promptTemplate = ChatPromptTemplate.fromMessages([
+    ["system", systemTemplate],
+    ["user", "{text}"],
+  ]);
 
-  const result = await model.invoke(messages);
+  const messages = await promptTemplate.invoke({
+    language: "italian",
+    text: "Hey, where are you come from?",
+  });
+
+  const chain = model.pipe(parser);
+
+  const result = await chain.invoke(messages);
 
   console.log("result", result);
 };
