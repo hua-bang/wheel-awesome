@@ -11,11 +11,15 @@
   "license": "ISC",
   "dependencies": {
     "@browserbasehq/sdk": "^1.1.5",
-    "@langchain/community": "^0.2.2",
+    "@langchain/community": "^0.2.3",
     "@langchain/core": "^0.2.0",
     "@langchain/openai": "^0.0.33",
     "cheerio": "1.0.0-rc.12",
+    "chromadb": "^1.8.1",
+    "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
-    "langchain": "^0.2.2"
+    "langchain": "^0.2.2",
+    "youtube-transcript": "^1.2.1",
+    "youtubei.js": "^9.4.0"
   }
 }
