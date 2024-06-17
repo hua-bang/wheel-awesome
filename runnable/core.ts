@@ -44,7 +44,5 @@ class B extends Runnable<string[], string> {
 
 const a = new A();
 const b = new B();
-
 const c = a.pipe(b);
-
 console.log("res", c.invoke("9"));
