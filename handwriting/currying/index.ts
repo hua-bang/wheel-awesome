@@ -18,4 +18,6 @@ const add = (a: number, b: number, c: number) => {
 
 const addCurry = currying(add);
 
-console.log(addCurry(1));
+const res = addCurry(1)(2)(3);
+
+console.log("res", res);
