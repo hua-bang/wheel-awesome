@@ -13,6 +13,8 @@
     "@rspack/cli": "1.0.0-beta.4",
     "@rspack/core": "1.0.0-beta.4",
     "cross-env": "^7.0.3",
+    "css-loader": "^7.1.2",
+    "style-loader": "^4.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
     "vue-loader": "^17.3.1"

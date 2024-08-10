@@ -1,10 +1,14 @@
-import { useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 import useInitMiniMicro from "./use-init-mini-micro";
+import { useEffect } from "react";
 
 function App() {
   const { loadApp1, loadApp2 } = useInitMiniMicro();
+
+  useEffect(() => {
+    loadApp1();
+  }, []);
 
   return (
     <div className="App">
@@ -19,7 +23,7 @@ function App() {
 
         <button onClick={() => loadApp2()}>vue app</button>
       </div>
-      <div id="sub_app_container">Sub App</div>
+      <div id="sub_app_container" style={{ height: 500, width: 800 }}></div>
     </div>
   );
 }

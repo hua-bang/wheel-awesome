@@ -12,6 +12,7 @@ export default defineConfig({
   },
   output: {
     libraryTarget: "umd",
+    publicPath: "http://localhost:8084/",
   },
   plugins: [
     new VueLoaderPlugin() as RspackPluginFunction,
@@ -58,13 +59,17 @@ export default defineConfig({
       },
       {
         test: /\.svg/,
-        type: "asset/resource",
+        type: "asset",
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
       },
     ],
   },
-  experiments: {
-    css: true,
-  },
+  // experiments: {
+  //   css: true,
+  // },
   devServer: {
     port: "8084",
     headers: {

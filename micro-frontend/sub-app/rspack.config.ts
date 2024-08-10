@@ -11,7 +11,7 @@ export default defineConfig({
   },
   output: {
     libraryTarget: "umd",
-    publicPath: "http://localhost:8086",
+    publicPath: "http://localhost:8086/",
   },
   resolve: {
     extensions: ["...", ".ts", ".tsx", ".jsx"],
