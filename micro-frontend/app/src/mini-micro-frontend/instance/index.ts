@@ -1,13 +1,22 @@
-import { MiniMicroFrontendAppConfig } from "../typings";
+import {
+  MiniMicroFrontendAppConfig,
+  MiniMicroFrontendRunOptions,
+} from "../typings";
 
 class MiniMicroFrontendApp {
   private appConfig: MiniMicroFrontendAppConfig;
+  private config: MiniMicroFrontendRunOptions;
   private sourceCode: string;
   private providerRes: any;
 
-  constructor(appConfig: MiniMicroFrontendAppConfig, sourceCode: string) {
+  constructor(
+    appConfig: MiniMicroFrontendAppConfig,
+    sourceCode: string,
+    config: MiniMicroFrontendRunOptions
+  ) {
     this.appConfig = appConfig;
     this.sourceCode = sourceCode;
+    this.config = config;
   }
 
   mount() {
@@ -24,10 +33,14 @@ class MiniMicroFrontendApp {
 
     const { provider } = executionFunction(exports) || {};
     this.providerRes = provider();
-    this.providerRes?.render();
+    this.providerRes?.render({
+      dom: document.querySelector(this.config.domGetter!),
+    });
   }
 
-  unmount() {}
+  unmount() {
+    this.providerRes?.destroy();
+  }
 }
 
 export default MiniMicroFrontendApp;

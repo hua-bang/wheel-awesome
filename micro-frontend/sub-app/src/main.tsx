@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 // import "./index.css";
@@ -10,15 +9,13 @@ import App from "./App.tsx";
 // );
 
 export const provider = () => ({
-  render: () => {
-    const dom = ReactDOM.createRoot(
-      document.getElementById("sub_app_container") as HTMLElement
-    );
+  render: ({ dom }) => {
+    const nextDom = ReactDOM.createRoot(dom);
 
-    dom.render(<App />);
+    nextDom.render(<App />);
   },
 
-  destroy: () => {
-    console.log("sub-app destroy");
+  destroy: ({ dom }) => {
+    ReactDOM.createRoot(dom).unmount();
   },
 });
