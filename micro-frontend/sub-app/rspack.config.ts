@@ -9,6 +9,9 @@ export default defineConfig({
   entry: {
     main: "./src/main.tsx",
   },
+  output: {
+    libraryTarget: "umd",
+  },
   resolve: {
     extensions: ["...", ".ts", ".tsx", ".jsx"],
   },
@@ -63,5 +66,12 @@ export default defineConfig({
   ].filter(Boolean),
   experiments: {
     css: true,
+  },
+  devServer: {
+    port: "8086",
+    headers: {
+      // 保证子应用的资源支持跨域，在上线后需要保证子应用的资源在主应用的环境中加载不会存在跨域问题（**也需要限制范围注意安全问题**）
+      "Access-Control-Allow-Origin": "*",
+    },
   },
 });

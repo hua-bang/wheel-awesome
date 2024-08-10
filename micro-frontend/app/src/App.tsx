@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
+import useInitMiniMicro from "./use-init-mini-micro";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const { loadApp1 } = useInitMiniMicro();
 
   return (
     <div className="App">
@@ -13,7 +14,12 @@ function App() {
         </a>
       </div>
       <h1>Main App</h1>
-      <div className="card">Sub App</div>
+      <div style={{ display: "flex", gap: 16 }}>
+        <button onClick={() => loadApp1()}>loadApp1</button>
+
+        <button onClick={() => loadApp1()}>loadApp2</button>
+      </div>
+      <div id="sub_app_container">Sub App</div>
     </div>
   );
 }
