@@ -22,11 +22,14 @@ class MiniMicroFrontendApp {
   mount() {
     const exports: Record<string, any> = {};
 
+    const source = this.sourceCode;
+
+    debugger;
     // 使用 Function 构造器创建一个新的作用域来执行 UMD 代码
     const executionFunction = new Function(
       "exports",
       `
-      ${this.sourceCode};
+      ${source};
       return exports;
     `
     );
@@ -39,7 +42,9 @@ class MiniMicroFrontendApp {
   }
 
   unmount() {
-    this.providerRes?.destroy();
+    this.providerRes?.destroy({
+      dom: document.querySelector(this.config.domGetter!),
+    });
   }
 }
 

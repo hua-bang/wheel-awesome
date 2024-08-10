@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
-// import "./index.css";
+import "./index.css";
 
 // ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 // 	<React.StrictMode>
@@ -10,9 +10,7 @@ import App from "./App.tsx";
 
 export const provider = () => ({
   render: ({ dom }) => {
-    const nextDom = ReactDOM.createRoot(dom);
-
-    nextDom.render(<App />);
+    ReactDOM.createRoot(dom).render(<App />);
   },
 
   destroy: ({ dom }) => {

@@ -11,6 +11,7 @@ export default defineConfig({
   },
   output: {
     libraryTarget: "umd",
+    publicPath: "http://localhost:8086",
   },
   resolve: {
     extensions: ["...", ".ts", ".tsx", ".jsx"],
@@ -52,6 +53,10 @@ export default defineConfig({
           },
         ],
       },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
     ],
   },
   plugins: [
@@ -64,9 +69,9 @@ export default defineConfig({
     }),
     isDev ? new RefreshPlugin() : null,
   ].filter(Boolean),
-  experiments: {
-    css: true,
-  },
+  // experiments: {
+  //   css: true,
+  // },
   devServer: {
     port: "8086",
     headers: {

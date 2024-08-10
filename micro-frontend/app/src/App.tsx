@@ -4,7 +4,7 @@ import "./App.css";
 import useInitMiniMicro from "./use-init-mini-micro";
 
 function App() {
-  const { loadApp1 } = useInitMiniMicro();
+  const { loadApp1, loadApp2 } = useInitMiniMicro();
 
   return (
     <div className="App">
@@ -15,9 +15,9 @@ function App() {
       </div>
       <h1>Main App</h1>
       <div style={{ display: "flex", gap: 16 }}>
-        <button onClick={() => loadApp1()}>loadApp1</button>
+        <button onClick={() => loadApp1()}>react app</button>
 
-        <button onClick={() => loadApp1()}>loadApp2</button>
+        <button onClick={() => loadApp2()}>vue app</button>
       </div>
       <div id="sub_app_container">Sub App</div>
     </div>
