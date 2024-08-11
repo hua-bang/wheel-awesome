@@ -1,3 +1,4 @@
+import Sandbox from "../sandbox";
 import {
   MiniMicroFrontendAppConfig,
   MiniMicroFrontendRunOptions,
@@ -8,6 +9,7 @@ class MiniMicroFrontendApp {
   private config: MiniMicroFrontendRunOptions;
   private sourceCode: string;
   private providerRes: any;
+  private sandbox: Sandbox = new Sandbox();
 
   constructor(
     appConfig: MiniMicroFrontendAppConfig,
@@ -20,21 +22,9 @@ class MiniMicroFrontendApp {
   }
 
   mount() {
-    const exports: Record<string, any> = {};
-
     const source = this.sourceCode;
 
-    debugger;
-    // 使用 Function 构造器创建一个新的作用域来执行 UMD 代码
-    const executionFunction = new Function(
-      "exports",
-      `
-      ${source};
-      return exports;
-    `
-    );
-
-    const { provider } = executionFunction(exports) || {};
+    const { provider } = this.sandbox.run(source);
     this.providerRes = provider();
     this.providerRes?.render({
       dom: document.querySelector(this.config.domGetter!),
