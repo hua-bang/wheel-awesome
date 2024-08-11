@@ -18,7 +18,15 @@ function App() {
       </div>
       <h1>Rspack + React</h1>
       <div className="card">
-        <button type="button" onClick={() => setCount((count) => count + 1)}>
+        <button
+          type="button"
+          onClick={() => {
+            setCount((count) => count + 1);
+            console.log(window, window.appName);
+            window.appName = "rspack + react";
+            console.log(window, window.appName);
+          }}
+        >
           count is {count}
         </button>
         <p>

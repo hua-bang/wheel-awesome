@@ -5,9 +5,9 @@ class Sandbox {
   private modifiedProps: Map<object, Set<string | symbol>>;
   private active: boolean;
   private originalValues: Map<object, Map<string | symbol, any>>;
-  private fakeWindow: Record<string, any> = {};
-  private fakeDocument: Record<string, any> = {};
-  private fakeLocation: Record<string, any> = {};
+  private fakeWindow: Record<string | symbol, any> = {};
+  private fakeDocument: Record<string | symbol, any> = {};
+  private fakeLocation: Record<string | symbol, any> = {};
 
   constructor() {
     this.modifiedProps = new Map();
@@ -28,60 +28,48 @@ class Sandbox {
     ) as Location;
   }
 
-  private getFakeObj(objectName: string): Record<string, any> {
-    if (objectName === "proxyWindow") {
-      return this.fakeWindow;
+  private createProxy(obj: object, objectName: string) {
+    if (!this.modifiedProps.has(obj)) {
+      this.modifiedProps.set(obj, new Set());
     }
-    if (objectName === "proxyDocument") {
-      return this.fakeDocument;
-    }
-    if (objectName === "proxyLocation") {
-      return this.fakeLocation;
+    if (!this.originalValues.has(obj)) {
+      this.originalValues.set(obj, new Map());
     }
 
-    return this.fakeWindow;
-  }
-
-  private createProxy(target: object, objectName: string) {
-    if (!this.modifiedProps.has(target)) {
-      this.modifiedProps.set(target, new Set());
-    }
-    if (!this.originalValues.has(target)) {
-      this.originalValues.set(target, new Map());
-    }
-
-    return new Proxy(target, {
-      get: (target: object, prop: string | symbol) => {
-        if (this.active) {
-          const modifiedPropsSet = this.modifiedProps.get(target)!;
-          if (modifiedPropsSet.has(prop)) {
-            const value: Record<string, any> =
-              this.getFakeObj(objectName)[prop as string];
-
-            return typeof value === "function" ? value.bind(target) : value;
-          }
-          const value = (target as any)[prop];
-          return typeof value === "function" ? value.bind(target) : value;
+    return new Proxy(obj, {
+      get: (target, p) => {
+        const val = (target as any)[p as string | symbol];
+        if (!this.active) {
+          return val;
         }
-        return (target as any)[prop];
+
+        const modifiedPropsSet = this.modifiedProps.get(target)!;
+        if (modifiedPropsSet.has(p)) {
+          const fakeObject = this.getFakeObject(target);
+          return fakeObject[p as string];
+        }
+
+        if (typeof val === "function") {
+          const valStr = val.toString();
+          if (!/^function\s+[A-Z]]/.test(valStr) && !/^class\s+/.test(valStr)) {
+            return val.bind(target);
+          }
+        }
       },
-      set: (target: object, prop: string | symbol, value: any, receiver) => {
-        if (this.active) {
-          const modifiedPropsSet = this.modifiedProps.get(target)!;
-          const originalValuesMap = this.originalValues.get(target)!;
-          if (!modifiedPropsSet.has(prop)) {
-            originalValuesMap.set(prop, (target as any)[prop]);
-            modifiedPropsSet.add(prop);
-          }
-
-          return Reflect.set(
-            this.getFakeObj(objectName),
-            prop,
-            value,
-            receiver
-          );
+      set: (target: object, prop: string | symbol, value: any) => {
+        if (!this.active) {
+          (target as any)[prop] = value;
+          return true;
         }
-        (target as any)[prop] = value;
+
+        const modifiedPropsSet = this.modifiedProps.get(target)!;
+        const originalValuesMap = this.originalValues.get(target)!;
+        if (!modifiedPropsSet.has(prop)) {
+          originalValuesMap.set(prop, (target as any)[prop]);
+          modifiedPropsSet.add(prop);
+        }
+        const fakeObject = this.getFakeObject(target);
+        fakeObject[prop as string] = value;
         return true;
       },
       has: (target: object, prop: string | symbol) => {
@@ -98,25 +86,36 @@ class Sandbox {
     this.active = false;
   }
 
-  run(code: string): Record<string, any> {
+  run(code: string): Record<string, any> | undefined {
     const exports: Record<string, any> = {};
 
     this.activate();
 
-    const executionFunction = new Function(
-      "window",
-      "document",
-      "location",
-      "exports",
-      `
-      with(window) {
+    let result: Record<string, any> | undefined = undefined;
+
+    try {
+      const executionFunction = new Function(
+        "window",
+        "document",
+        "location",
+        "exports",
+        `
+        console.log("Running code", location, location.a = 2);
+
         ${code};
         return exports;
-      }
-    `
-    );
+      `
+      );
 
-    const result = executionFunction(window, document, location, exports);
+      result = executionFunction(
+        this.proxyWindow,
+        this.proxyDocument,
+        this.proxyLocation,
+        exports
+      );
+    } catch (err) {
+      console.error(err);
+    }
 
     return result;
   }
@@ -125,12 +124,12 @@ class Sandbox {
     this.deactivate();
     for (const [target, modifiedPropsSet] of this.modifiedProps.entries()) {
       const originalValuesMap = this.originalValues.get(target)!;
+      const fakeObject = this.getFakeObject(target);
       for (const prop of modifiedPropsSet) {
         if (originalValuesMap.has(prop)) {
-          (this as any)[this.getProxyName(target)][prop] =
-            originalValuesMap.get(prop);
+          fakeObject[prop as string] = originalValuesMap.get(prop);
         } else {
-          delete (this as any)[this.getProxyName(target)][prop];
+          delete fakeObject[prop as string];
         }
       }
       modifiedPropsSet.clear();
@@ -138,10 +137,10 @@ class Sandbox {
     }
   }
 
-  private getProxyName(target: object): string {
-    if (target === window) return "proxyWindow";
-    if (target === document) return "proxyDocument";
-    if (target === location) return "proxyLocation";
+  private getFakeObject(target: object): { [key: string]: any } {
+    if (target === window) return this.fakeWindow;
+    if (target === document) return this.fakeDocument;
+    if (target === location) return this.fakeLocation;
     throw new Error("Unknown target object");
   }
 }

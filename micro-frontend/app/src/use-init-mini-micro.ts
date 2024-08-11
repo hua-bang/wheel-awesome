@@ -3,6 +3,8 @@ import miniMicroFrontend from "./mini-micro-frontend";
 import { MiniMicroFrontendAppConfig } from "./mini-micro-frontend/typings";
 import MiniMicroFrontendApp from "./mini-micro-frontend/instance";
 
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const app1: MiniMicroFrontendAppConfig = {
   name: "app1",
   entry: "http://localhost:8086/main.js",
@@ -31,6 +33,7 @@ export const useInitMiniMicro = () => {
     if (app2Ref.current) {
       app2Ref.current.unmount();
     }
+    await sleep(500);
     const app = await loadApp(app1);
     app1Ref.current = app;
     app.mount();
@@ -40,6 +43,7 @@ export const useInitMiniMicro = () => {
     if (app1Ref.current) {
       app1Ref.current.unmount();
     }
+    await sleep(500);
     const app = await loadApp(app2);
     app2Ref.current = app;
     app.mount();
