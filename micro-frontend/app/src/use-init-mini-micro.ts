@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import miniMicroFrontend from "./mini-micro-frontend";
 import { MiniMicroFrontendAppConfig } from "./mini-micro-frontend/typings";
-import MiniMicroFrontendApp from "./mini-micro-frontend/instance";
+import MiniMicroFrontendApp from "./mini-micro-frontend/app";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -22,6 +22,15 @@ export const useInitMiniMicro = () => {
   useEffect(() => {
     miniMicroFrontend.run({
       domGetter: "#sub_app_container",
+      bootstrap(options) {
+        console.log("bootstrap", options);
+      },
+      beforeLoad(app) {
+        console.log("beforeLoad", app);
+      },
+      afterLoad(app) {
+        console.log("afterLoad", app);
+      },
     });
   }, []);
 
@@ -33,7 +42,7 @@ export const useInitMiniMicro = () => {
     if (app2Ref.current) {
       app2Ref.current.unmount();
     }
-    await sleep(500);
+    await sleep(50);
     const app = await loadApp(app1);
     app1Ref.current = app;
     app.mount();
@@ -43,7 +52,7 @@ export const useInitMiniMicro = () => {
     if (app1Ref.current) {
       app1Ref.current.unmount();
     }
-    await sleep(500);
+    await sleep(50);
     const app = await loadApp(app2);
     app2Ref.current = app;
     app.mount();

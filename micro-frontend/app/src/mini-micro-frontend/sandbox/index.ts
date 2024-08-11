@@ -28,7 +28,7 @@ class Sandbox {
     ) as Location;
   }
 
-  private createProxy(obj: object, objectName: string) {
+  private createProxy(obj: object) {
     if (!this.modifiedProps.has(obj)) {
       this.modifiedProps.set(obj, new Set());
     }
@@ -53,10 +53,7 @@ class Sandbox {
         }
 
         if (typeof val === "function") {
-          const valStr = val.toString();
-          if (!/^function\s+[A-Z]]/.test(valStr) && !/^class\s+/.test(valStr)) {
-            return val.bind(target);
-          }
+          return val.bind(target);
         }
       },
       set: (target: object, prop: string | symbol, value: any) => {
