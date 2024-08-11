@@ -38,6 +38,9 @@ class Sandbox {
 
     return new Proxy(obj, {
       get: (target, p) => {
+        if (p === Symbol.unscopables) {
+          return target;
+        }
         const val = (target as any)[p as string | symbol];
         if (!this.active) {
           return val;
@@ -100,10 +103,10 @@ class Sandbox {
         "location",
         "exports",
         `
-        console.log("Running code", location, location.a = 2);
-
-        ${code};
-        return exports;
+        with (window) {
+          ${code};
+          return exports;
+        }
       `
       );
 
