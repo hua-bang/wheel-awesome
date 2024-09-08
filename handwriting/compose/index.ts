@@ -1,11 +1,9 @@
-const compose = (...fns: Function[]) => {
-  return fns.reduce(
+const compose = (...fns: Function[]) =>
+  fns.reduce(
     (f, g) =>
       (...args: any[]) =>
         f(g(...args))
   );
-};
-
 const add2 = (x: number) => x + 2;
 const multiply3 = (x: number) => x * 3;
 const toString1 = (x: number) => x.toString();

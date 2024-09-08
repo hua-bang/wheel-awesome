@@ -1,8 +1,9 @@
-const compose = (...fns: Function[]) => {
-  return (params: any) => {
-    return fns.reduceRight((acc, fn) => fn(acc), params);
-  };
-};
+const compose = (...fns: Function[]) =>
+  fns.reduce(
+    (f, g) =>
+      (...args: any) =>
+        f(g(...args))
+  );
 
 const add2 = (x: number) => x + 2;
 const multiply3 = (x: number) => x * 3;
