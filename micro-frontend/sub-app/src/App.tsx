@@ -28,6 +28,7 @@ function App() {
           }}
         >
           count is {count}
+          {/* count is {count.toLocaleString().test()} */}
         </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
