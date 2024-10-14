@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    input[type="radio"] {
+      display: none;
+    }
+
+    input[type="radio"] + label {
+      background: #a4cfda;
+      color: white;
+      padding: 16px;
+      cursor: pointer;
+    }
+
+    input[type="radio"]:checked + label {
+      background: #333;
+    }
+  </style>
+</head>
+<body>
+  <div style="display: flex; align-items: center;">
+    <div style="display: flex; align-items: center;">
+      <input type="radio" id="tab1" name="tabKey" checked>
+      <label for="tab1">
+        标签1
+      </label>
+    </div>
+    <div style="display: flex; align-items: center;">
+      <input type="radio" id="tab2" name="tabKey">
+      <label for="tab2">
+        标签2
+      </label>
+    </div>
+    <div style="display: flex; align-items: center;">
+      <input type="radio" id="tab3" name="tabKey">
+      <label for="tab3">
+        标签3
+      </label>
+    </div>
+  </div>
+</body>
+</html>
